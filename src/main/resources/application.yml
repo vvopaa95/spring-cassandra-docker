@@ -1,0 +1,12 @@
+spring:
+  data:
+    cassandra:
+      keyspace-name: ${CASSANDRA_KEYSPACE}
+      contact-points: cassandra-node-seed
+      local-datacenter: datacenter1
+      request:
+        timeout: 10s
+      schema-action: create_if_not_exists
+
+server:
+  port: 8080

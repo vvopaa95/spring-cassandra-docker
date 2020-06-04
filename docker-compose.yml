@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  cassandra-node-seed:
+    container_name: cassandra-seed
+    build:
+      context: .
+      dockerfile: cassandra-seed.Dockerfile
+    env_file:
+      - 'seed.env'
+    ports:
+      - "9042:9042"   # Native transport
+      - "7199:7199"   # JMX
+      - "9160:9160"   # Thrift clients
+
+  cassandra-node-2:
+    container_name: node-2
+    image: cassandra:latest
+    command: /bin/bash -c "echo 'Waiting for seed node' && sleep 60 && /docker-entrypoint.sh cassandra -f"
+    env_file:
+      - 'seed-child.env'
+    depends_on:
+      - "cassandra-node-seed"
+
+  cassandra-node-3:
+    container_name: node-3
+    image: cassandra:latest
+    command: /bin/bash -c "echo 'Waiting for seed node' && sleep 120 && /docker-entrypoint.sh cassandra -f"
+    env_file:
+      - 'seed-child.env'
+    depends_on:
+      - "cassandra-node-seed"
+
+  cassandra-node-4:
+    container_name: node-4
+    image: cassandra:latest
+    command: /bin/bash -c "echo 'Waiting for seed node' && sleep 180 && /docker-entrypoint.sh cassandra -f"
+    env_file:
+      - 'seed-child.env'
+    depends_on:
+      - "cassandra-node-seed"
+
+  app:
+    build: .
+    env_file:
+      - 'seed.env'
+    depends_on:
+      - "cassandra-node-seed"
+    ports:
+      - "8080:8080"
+
+# you cannot have multiple nodes join the cluster at the same time when
+# cassandra.consistent.rangemovement=true so we further delay it to give it time to stabilize
