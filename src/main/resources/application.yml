@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   data:
     cassandra:
       keyspace-name: ${CASSANDRA_KEYSPACE}

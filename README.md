@@ -7,4 +7,4 @@ Nodes status: nodetool status
 Enter query language shell: cqlsh
 Docker container statistics: docker stats
 Cassandra run test: cassandra-stress write n=1000000 (tool need to be installed cassandra-stress tool)
-Percentile statistics: docker exec cassandra-seen nodetool tablehistograms vvopaa tutorial
+Percentile statistics: docker exec cassandra-seed nodetool tablehistograms vvopaa tutorial
