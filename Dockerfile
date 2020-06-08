@@ -20,4 +20,4 @@ COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 COPY wait-for-it.sh /usr/bin/wait-for-it.sh
 RUN chmod +x /usr/bin/wait-for-it.sh
-ENTRYPOINT ["wait-for-it.sh", "-t", "300", "cassandra-node-4:9042","--", "java","-cp","app:app/lib/*","com.vvopaa.cassandra.Application"]
+ENTRYPOINT ["wait-for-it.sh", "-t", "300", "cassandra-node-3:9042","--", "java","-cp","app:app/lib/*","com.vvopaa.cassandra.Application"]

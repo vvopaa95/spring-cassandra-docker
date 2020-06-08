@@ -1,4 +1,5 @@
-On Windows OS 10 had to increase docker memory limit to 7 Gb + 1Gb SWAP for 1 local data-center with 4 nodes.
+Spring-docker-cassandra. Cassandra cluster with 3 nodes and replication factor = 2.
+If want more nodes -> add new
 
 Start application: docker-compose up --build --remove-orphans --abort-on-container-exit
 (-d if background) (--build if need to rebuild image)

@@ -15,8 +15,11 @@ services:
 
   cassandra-node-2:
     container_name: node-2
-    image: cassandra:latest
-    command: /bin/bash -c "echo 'Waiting for seed node' && sleep 60 && /docker-entrypoint.sh cassandra -f"
+    build:
+      context: .
+      dockerfile: cassandra-node.Dockerfile
+    environment:
+      NODE_ID: seed
     env_file:
       - 'seed-child.env'
     depends_on:
@@ -24,17 +27,11 @@ services:
 
   cassandra-node-3:
     container_name: node-3
-    image: cassandra:latest
-    command: /bin/bash -c "echo 'Waiting for seed node' && sleep 120 && /docker-entrypoint.sh cassandra -f"
-    env_file:
-      - 'seed-child.env'
-    depends_on:
-      - "cassandra-node-seed"
-
-  cassandra-node-4:
-    container_name: node-4
-    image: cassandra:latest
-    command: /bin/bash -c "echo 'Waiting for seed node' && sleep 180 && /docker-entrypoint.sh cassandra -f"
+    build:
+      context: .
+      dockerfile: cassandra-node.Dockerfile
+    environment:
+      NODE_ID: 2
     env_file:
       - 'seed-child.env'
     depends_on:
